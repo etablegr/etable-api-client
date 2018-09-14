@@ -1,0 +1,24 @@
+{
+    "name": "yrizos/etable-api",
+    "description": "etable API client",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yannis Rizos",
+            "email": "yrizos@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "guzzlehttp/guzzle": "~6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Etable\\": "src/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.1"
+    }
+}
