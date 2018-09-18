@@ -2,32 +2,29 @@
 
 namespace Etable;
 
-use GuzzleHttp\Client as GuzzleHttpClient;
+use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
 
-class ApiClient extends GuzzleHttpClient
+class ApiClient extends Client
 {
-    const NAME             = 'yrizos/etable-api';
+    const DEFAULT_BASE_URI = 'https://api.e-table.gr';
+    const NAME             = 'yrizos/etable-api-client';
     const VERSION          = '0.1';
     const DEFAULT_LANGUAGE = 'en';
-    const DEFAULT_BASE_URI = 'https://api.e-table.gr';
-
-    private $token;
-    private $language;
 
     public function __construct(array $config = [])
     {
         $token    = isset($config['token']) ? $config['token'] : '';
         $language = isset($config['language']) ? $config['language'] : self::DEFAULT_LANGUAGE;
 
-        unset($config['token'], $config['langauge']);
+        unset($config['token'], $config['language']);
 
         if (!isset($config['base_uri'])) {
             $config['base_uri'] = self::DEFAULT_BASE_URI;
         }
 
         $headers                    = isset($config['headers']) && is_array($config['headers']) ? $config['headers'] : [];
-        $headers['User-Agent']      = self::NAME . '/' . self::VERSION . ' (+https://github.com/yrizos/etable-api)';
+        $headers['User-Agent']      = self::getUserAgent();
         $headers['Authorization']   = 'Bearer ' . $token;
         $headers['Accept-Language'] = $language;
 
@@ -36,11 +33,17 @@ class ApiClient extends GuzzleHttpClient
         parent::__construct($config);
     }
 
+    public static function getUserAgent()
+    {
+        return 'yrizos/etable-api-client/' . self::VERSION . ' (+https://gitlab.com/yrizos/etable-api-client)';
+    }
+
     public static function getArrayResponse(ResponseInterface $response)
     {
         $response = json_decode($response->getBody(), true);
+        $response = isset($response['data']) ? $response['data'] : [];
 
-        return $response['data'];
+        return $response;
     }
 
     public function getNotifications(int $user_id): array
