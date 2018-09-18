@@ -9,7 +9,7 @@ class ApiClient extends Client
 {
     const DEFAULT_BASE_URI = 'https://api.e-table.gr';
     const NAME             = 'yrizos/etable-api-client';
-    const VERSION          = '0.1';
+    const VERSION          = '0.2';
     const DEFAULT_LANGUAGE = 'en';
 
     public function __construct(array $config = [])
