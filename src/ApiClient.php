@@ -102,13 +102,11 @@ class ApiClient extends Client
         ]);
     }
 
-    public function createUserReviewFolloweeMessage(int $user_id, int $review_id)
+    public function createUserReviewFolloweeMessage(int $review_id)
     {
-        return $this->createNotification([
-            'user_id'   => $user_id,
-            'type'      => 'user_review_followee',
-            'review_id' => $review_id,
-        ]);
+        $response = $this->request('POST', '/v4/review-notifications/' . $review_id, []);
+
+        return self::getArrayResponse($response);
     }
 
     public function createUserNpsReminderMessage(int $user_id)
