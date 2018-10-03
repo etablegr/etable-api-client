@@ -83,14 +83,13 @@ class ApiClient extends Client
         ]);
     }
 
-    public function createUserReviewUpvotedMessage(int $user_id, int $review_id, int $reviewer_id)
+    public function createUserReviewUpvotedMessage(int $review_id, int $reviewer_id)
     {
-        return $this->createNotification([
-            'user_id'     => $user_id,
-            'type'        => 'user_review_upvoted',
-            'review_id'   => $review_id,
+        $response = $this->request('POST', '/v4/notification/review-published/' . $review_id, [
             'reviewer_id' => $reviewer_id,
         ]);
+
+        return self::getArrayResponse($response);
     }
 
     public function createUserReviewReminderMessage(int $user_id, int $review_id)
@@ -102,9 +101,9 @@ class ApiClient extends Client
         ]);
     }
 
-    public function createUserReviewFolloweeMessage(int $review_id)
+    public function createUserReviewPublishedMessage(int $review_id)
     {
-        $response = $this->request('POST', '/v4/review-notifications/' . $review_id, []);
+        $response = $this->request('POST', '/v4/notification/review-published/' . $review_id, []);
 
         return self::getArrayResponse($response);
     }
