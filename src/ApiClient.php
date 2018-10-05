@@ -85,9 +85,8 @@ class ApiClient extends Client
 
     public function createUserReviewUpvotedMessage(int $review_id, int $reviewer_id)
     {
-        $response = $this->request('POST', '/v4/notification/review-published/' . $review_id, [
-            'reviewer_id' => $reviewer_id,
-        ]);
+        $options  = ['form_params' => ['reviewer_id' => $reviewer_id]];
+        $response = $this->request('POST', '/v4/notification/review-upvoted/' . $review_id, $options);
 
         return self::getArrayResponse($response);
     }
