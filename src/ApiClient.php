@@ -9,13 +9,13 @@ class ApiClient extends Client
 {
     const BASE_URI = 'https://api.e-table.gr';
     const NAME = 'yrizos/etable-api-client';
-    const VERSION = '0.5';
+    const VERSION = '0.6';
     const LANGUAGE = 'en';
     const TIMEOUT = 30;
 
     private $timeout = self::TIMEOUT;
 
-    public function __construct(array $config = [])
+    public function __construct (array $config = [])
     {
         $token    = isset($config['token']) ? $config['token'] : '';
         $language = isset($config['language']) ? $config['language'] : self::LANGUAGE;
@@ -40,19 +40,19 @@ class ApiClient extends Client
         parent::__construct($config);
     }
 
-    public function setTimeout(int $timeout): ApiClient
+    public function setTimeout (int $timeout): ApiClient
     {
         $this->timeout = $timeout;
 
         return $this;
     }
 
-    public function getTimeout(): int
+    public function getTimeout (): int
     {
         return $this->timeout;
     }
 
-    public function request($method, $uri = '', array $options = [])
+    public function request ($method, $uri = '', array $options = [])
     {
         if (!isset($options['timeout'])) {
             $options['timeout'] = $this->getTimeout();
@@ -61,14 +61,14 @@ class ApiClient extends Client
         return parent::request($method, $uri, $options);
     }
 
-    public static function getUserAgent()
+    public static function getUserAgent ()
     {
         return 'yrizos/etable-api-client/' . self::VERSION . ' (+https://gitlab.com/yrizos/etable-api-client)';
     }
 
-    public static function getArrayResponse(ResponseInterface $response)
+    public static function getArrayResponse (ResponseInterface $response)
     {
-        $response = json_decode($response->getBody(), true);
+        $response = json_decode($response->getBody(), TRUE);
         $response = isset($response['data']) ? $response['data'] : [];
 
         return $response;
