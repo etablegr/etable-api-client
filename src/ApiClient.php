@@ -9,7 +9,7 @@ class ApiClient extends Client
 {
     const BASE_URI = 'https://api.e-table.gr';
     const NAME = 'yrizos/etable-api-client';
-    const VERSION = '0.5';
+    const VERSION = '0.6';
     const LANGUAGE = 'en';
     const TIMEOUT = 30;
 
