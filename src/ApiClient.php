@@ -8,14 +8,18 @@ use Psr\Http\Message\ResponseInterface;
 class ApiClient extends Client
 {
     const BASE_URI = 'https://api.e-table.gr';
-    const NAME = 'yrizos/etable-api-client';
-    const VERSION = '0.6';
+
     const LANGUAGE = 'en';
+
+    const NAME = 'yrizos/etable-api-client';
+
     const TIMEOUT = 30;
+
+    const VERSION = '0.7';
 
     private $timeout = self::TIMEOUT;
 
-    public function __construct (array $config = [])
+    public function __construct(array $config = [])
     {
         $token    = isset($config['token']) ? $config['token'] : '';
         $language = isset($config['language']) ? $config['language'] : self::LANGUAGE;
@@ -25,7 +29,7 @@ class ApiClient extends Client
 
         $this->setTimeout($timeout);
 
-        if (!isset($config['base_uri'])) {
+        if (! isset($config['base_uri'])) {
             $config['base_uri'] = self::BASE_URI;
         }
 
@@ -40,37 +44,40 @@ class ApiClient extends Client
         parent::__construct($config);
     }
 
-    public function setTimeout (int $timeout): ApiClient
+    public static function getArrayResponse(ResponseInterface $response)
     {
-        $this->timeout = $timeout;
+        $response = json_decode($response->getBody(), true);
+        $response = isset($response['data']) ? $response['data'] : [];
 
-        return $this;
+        return $response;
     }
 
-    public function getTimeout (): int
+    public function getTimeout(): int
     {
         return $this->timeout;
     }
 
-    public function request ($method, $uri = '', array $options = [])
+    public static function getUserAgent()
     {
-        if (!isset($options['timeout'])) {
+        return 'yrizos/etable-api-client/' . self::VERSION . ' (+https://gitlab.com/yrizos/etable-api-client)';
+    }
+
+    public function request(
+        $method,
+        $uri = '',
+        array $options = []
+    ) {
+        if (! isset($options['timeout'])) {
             $options['timeout'] = $this->getTimeout();
         }
 
         return parent::request($method, $uri, $options);
     }
 
-    public static function getUserAgent ()
+    public function setTimeout(int $timeout): ApiClient
     {
-        return 'yrizos/etable-api-client/' . self::VERSION . ' (+https://gitlab.com/yrizos/etable-api-client)';
-    }
+        $this->timeout = $timeout;
 
-    public static function getArrayResponse (ResponseInterface $response)
-    {
-        $response = json_decode($response->getBody(), TRUE);
-        $response = isset($response['data']) ? $response['data'] : [];
-
-        return $response;
+        return $this;
     }
 }
