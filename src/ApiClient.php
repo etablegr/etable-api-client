@@ -15,7 +15,7 @@ class ApiClient extends Client
 
     const TIMEOUT = 30;
 
-    const VERSION = '0.7';
+    const VERSION = '0.8';
 
     private $timeout = self::TIMEOUT;
 
