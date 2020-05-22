@@ -80,16 +80,6 @@ class SearchSanitizersTest extends TestCase
         $this->assertEquals($expected, $output);
     }
 
-    public function testSanitizeSearchTermRemoveSingleWords()
-    {
-        $input    = "I am Mr T boss";
-        $expected = "am mr boss";
-
-        $output = SearchSanitizers::sanitizeSearchTerm($input);
-
-        $this->assertEquals($expected, $output);
-    }
-
     public function testSanitizeSpecialCharacters()
     {
         $input    = "!#().-_+&'\"`]";
