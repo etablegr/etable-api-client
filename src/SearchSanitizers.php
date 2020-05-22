@@ -270,15 +270,9 @@ class SearchSanitizers
     public static function sanitizeSearchTerm($value): string
     {
         $value = self::removeExcessWhitespace($value);
-        $value = mb_strtolower($value);
         $value = self::unaccentGreekString($value);
+        $value = mb_strtolower($value);
         $value = str_replace(['!', '#', '(', ')', '.', '-', '_', '+', '&', ',', "'", '`', '"'], ' ', $value);
-        $value = explode(' ', $value);
-        $value = array_filter($value, function ($item) {
-            return mb_strlen($item) > 1;
-        });
-
-        $value = implode(' ', $value);
 
         return $value;
     }
