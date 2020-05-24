@@ -269,10 +269,11 @@ class SearchSanitizers
 
     public static function sanitizeSearchTerm($value): string
     {
-        $value = self::removeExcessWhitespace($value);
-        $value = self::unaccentGreekString($value);
+        $value = self::filterString($value);
         $value = mb_strtolower($value);
-        $value = str_replace(['!', '#', '(', ')', '.', '-', '_', '+', '&', ',', "'", '`', '"'], ' ', $value);
+        $value = str_replace(['!', '#', '(', ')', '.', '-', '_', '+', '&', ',', "'", '`', '"'], '', $value);
+        $value = self::unaccentGreekString($value);
+        $value = self::removeExcessWhitespace($value);
 
         return $value;
     }
