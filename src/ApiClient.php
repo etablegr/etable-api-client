@@ -15,7 +15,7 @@ class ApiClient extends Client
 
     const TIMEOUT = 30;
 
-    const VERSION = '0.7';
+    const VERSION = '0.10';
 
     private $timeout = self::TIMEOUT;
 
@@ -29,7 +29,7 @@ class ApiClient extends Client
 
         $this->setTimeout($timeout);
 
-        if (! isset($config['base_uri'])) {
+        if (!isset($config['base_uri'])) {
             $config['base_uri'] = self::BASE_URI;
         }
 
@@ -46,7 +46,7 @@ class ApiClient extends Client
 
     public static function getArrayResponse(ResponseInterface $response)
     {
-        $response = json_decode($response->getBody(), true);
+        $response = json_decode($response->getBody(), TRUE);
         $response = isset($response['data']) ? $response['data'] : [];
 
         return $response;
@@ -59,15 +59,16 @@ class ApiClient extends Client
 
     public static function getUserAgent()
     {
-        return 'yrizos/etable-api-client/' . self::VERSION . ' (+https://gitlab.com/yrizos/etable-api-client)';
+        return self::NAME . '/' . self::VERSION . ' (+https://github.com/yrizos/etable-api-client)';
     }
 
     public function request(
         $method,
         $uri = '',
         array $options = []
-    ) {
-        if (! isset($options['timeout'])) {
+    )
+    {
+        if (!isset($options['timeout'])) {
             $options['timeout'] = $this->getTimeout();
         }
 
