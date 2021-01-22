@@ -7,6 +7,10 @@
         {
             "name": "Yannis Rizos",
             "email": "yrizos@gmail.com"
+        },
+        {
+            "name": "Dimitrios Desyllas",
+            "email": "d.desyllas@e-table.gr"
         }
     ],
     "require": {
